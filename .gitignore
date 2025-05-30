@@ -1,3 +1,5 @@
-.env
-*.sqlite3
+
+env/
+notes.docx
 __pycache__/
+.~notes.docx

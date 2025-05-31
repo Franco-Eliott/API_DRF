@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 
-from shop.models import Category, Product
+from shop.models import Category, Product, Article
 
 class CategorySerializer(ModelSerializer):
 
@@ -13,3 +13,10 @@ class ProductSerializer(ModelSerializer):
     class Meta:
         model = Product
         fields = ['id','name', 'date_created', 'date_updated', 'category']
+
+# endpoint de récupération des articles sur l’URL
+class ArticleSerializer(ModelSerializer):
+
+    class Meta:
+        model = Article
+        fields = ['id', 'date_created', 'date_updated', 'name', 'price', 'product']

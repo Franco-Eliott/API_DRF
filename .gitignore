@@ -3,3 +3,4 @@ env/
 notes.docx
 __pycache__/
 .~notes.docx
+db.sqlite3

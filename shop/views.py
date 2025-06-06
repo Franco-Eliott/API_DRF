@@ -82,3 +82,10 @@ class ArticleViewset(ReadOnlyModelViewSet):
         
         return queryset
 
+
+class AdminArticleViewset(MultipleSerializerMixin, ModelViewSet):
+
+    serializer_class = ArticleSerializer
+
+    def get_queryset(self):
+        return Article.objects.all()

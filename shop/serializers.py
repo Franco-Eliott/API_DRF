@@ -9,6 +9,21 @@ class ArticleSerializer(serializers.ModelSerializer):
         model = Article
         fields = ['id', 'date_created', 'date_updated', 'name', 'price', 'product']
 
+    # def validate(self, data):
+    #     if data['price'] < 1:
+    #         raise serializers.ValidationError('Price must be greater than 1 €')
+    #     return data
+    
+    def validate_price(self, value):
+        if value < 1:
+            raise serializers.ValidationError('Price must be greater than 1 €')
+        return value
+          
+    def validate_product(self, value):
+        if value.active is False:
+            raise serializers.ValidationError('The product is not active')
+        return value
+    
 
 class ProductDetailSerializer(serializers.ModelSerializer):
 
@@ -53,7 +68,7 @@ class CategoryListSerializer(serializers.ModelSerializer):
 
     def validate_name(self, value):
         if Category.objects.filter(name=value).exists():
-            print('Category already exist')
+            # print('Category already exist')
             raise serializers.ValidationError('Category already exist')
         return value
     

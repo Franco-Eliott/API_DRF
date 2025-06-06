@@ -33,6 +33,14 @@ class Product(models.Model):
 
     category = models.ForeignKey('shop.Category', on_delete=models.CASCADE, related_name='products')
 
+    @transaction.atomic
+    def disable(self):
+        if self.active is False:
+            return
+        self.active = False
+        self.save()
+        self.articles.update(active=False)
+
     def __str__(self):
         return self.name
 

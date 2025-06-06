@@ -29,7 +29,7 @@ class CategoryViewset(MultipleSerializerMixin, ReadOnlyModelViewSet):
         self.get_object().disable()
         return Response()
 
-class ProductViewset(ReadOnlyModelViewSet):
+class ProductViewset(MultipleSerializerMixin, ReadOnlyModelViewSet):
 
     serializer_class = ProductListSerializer
     detail_serializer_class = ProductDetailSerializer
@@ -45,10 +45,15 @@ class ProductViewset(ReadOnlyModelViewSet):
         
         return queryset
     
-    def get_serializer_class(self):
-        if self.action == 'retrieve':
-            return self.detail_serializer_class
-        return super().get_serializer_class()
+    @action(detail=True, methods=['post'])
+    def disable(self, request, pk):
+        self.get_object().disable()
+        return Response()
+    
+    # def get_serializer_class(self):
+    #     if self.action == 'retrieve':
+    #         return self.detail_serializer_class
+    #     return super().get_serializer_class()
     
 class ArticleViewset(ReadOnlyModelViewSet):
 

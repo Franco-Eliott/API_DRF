@@ -49,4 +49,15 @@ class CategoryListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = ['id', 'name', 'date_created', 'date_updated']
+        fields = ['id', 'name', 'description', 'date_created', 'date_updated']
+
+    def validate_name(self, value):
+        if Category.objects.filter(name=value).exists():
+            print('Category already exist')
+            raise serializers.ValidationError('Category already exist')
+        return value
+    
+    def validate(self, data):
+        if data['name'] not in data['description']:
+            raise serializers.ValidationError('Name must be in description')
+        return data

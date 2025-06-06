@@ -1,5 +1,5 @@
 # from rest_framework.views import APIView
-from rest_framework.viewsets import ReadOnlyModelViewSet
+from rest_framework.viewsets import ReadOnlyModelViewSet, ModelViewSet
 from rest_framework.response import Response
 from rest_framework.decorators import action
 
@@ -32,6 +32,14 @@ class CategoryViewset(MultipleSerializerMixin, ReadOnlyModelViewSet):
             article.disable()
         product.disable()
         return Response()
+    
+class AdminCategoryViewset(MultipleSerializerMixin, ModelViewSet):
+
+    serializer_class = CategoryListSerializer
+    detail_serailizer_class = CategoryDetailSerializer
+
+    def get_queryset(self):
+        return Category.objects.all()
 
 class ProductViewset(MultipleSerializerMixin, ReadOnlyModelViewSet):
 

@@ -8,7 +8,7 @@ class Category(models.Model):
 
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    active = models.BooleanField(default=False)
+    active = models.BooleanField(default=True)
     
     @transaction.atomic
     def disable(self):

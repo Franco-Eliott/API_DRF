@@ -26,7 +26,11 @@ class CategoryViewset(MultipleSerializerMixin, ReadOnlyModelViewSet):
     
     @action(detail=True, methods=['post'])
     def disable(self, request, pk):
-        self.get_object().disable()
+        product = self.get_object()
+        articles = product.products.all()
+        for article in articles:
+            article.disable()
+        product.disable()
         return Response()
 
 class ProductViewset(MultipleSerializerMixin, ReadOnlyModelViewSet):

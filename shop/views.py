@@ -8,7 +8,7 @@ from shop.serializers import CategoryListSerializer, CategoryDetailSerializer, P
 
 from rest_framework.permissions import IsAuthenticated
 
-from shop.permissions import IsAdminAuthenticated
+from shop.permissions import IsAdminAuthenticated, IsAdminStaff
 
 class MultipleSerializerMixin:
 
@@ -41,7 +41,7 @@ class AdminCategoryViewset(MultipleSerializerMixin, ModelViewSet):
     serializer_class = CategoryListSerializer
     detail_serailizer_class = CategoryDetailSerializer
 
-    permission_classes = [IsAdminAuthenticated]
+    permission_classes = [IsAdminAuthenticated, IsAdminStaff]
 
     def get_queryset(self):
         return Category.objects.all()
